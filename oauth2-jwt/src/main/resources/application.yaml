@@ -1,0 +1,6 @@
+spring:
+  redis:
+    password: qweEX123
+    port: 6377
+server:
+  port: 9042
