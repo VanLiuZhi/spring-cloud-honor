@@ -19,6 +19,8 @@
         <module>oauth2-jwt</module>
         <module>oauth2-client</module>
         <module>oauth2-client2</module>
+        <module>register-center</module>
+        <module>api-gateway</module>
     </modules>
 
     <properties>
