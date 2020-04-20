@@ -1,8 +1,8 @@
 package com.vanliuzhi.org.oauth2.simple.service;
 
+import com.vanliuzhi.org.oauth2.simple.module.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.authority.AuthorityUtils;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -30,12 +30,12 @@ public class UserService implements UserDetailsService {
 
     /**
      * 初始化，模拟数据
-     *
-     *  PostConstruct 修饰的方法会在服务器加载Servlet的时候运行，并且只会被服务器执行一次，属于servlet 的规范
-     *  注解的方法将会在依赖注入完成后被自动调用
+     * <p>
+     * PostConstruct 修饰的方法会在服务器加载Servlet的时候运行，并且只会被服务器执行一次，属于servlet 的规范
+     * 注解的方法将会在依赖注入完成后被自动调用
      */
     @PostConstruct
-    private void initData() {
+    public void initData() {
         String password = passwordEncoder.encode("123456");
         userList = new ArrayList<>();
         userList.add(new User("macro", password, AuthorityUtils.commaSeparatedStringToAuthorityList("admin")));
