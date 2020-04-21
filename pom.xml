@@ -21,12 +21,20 @@
         <module>oauth2-client2</module>
         <module>register-center</module>
         <module>api-gateway</module>
+        <module>user-center</module>
     </modules>
 
     <properties>
         <java.version>1.8</java.version>
         <spring-boot.version>2.1.12.RELEASE</spring-boot.version>
         <spring-cloud-dependencies.version>Greenwich.SR5</spring-cloud-dependencies.version>
+
+        <!-- 通用依赖版本号 -->
+        <swagger.version>2.9.2</swagger.version>
+        <mysql.connector.version>5.1.47</mysql.connector.version>
+        <mybatis.version>2.1.0</mybatis.version>
+        <jjwt.version>0.9.0</jjwt.version>
+        <json.version>20140107</json.version>
     </properties>
 
     <dependencies>
@@ -41,6 +49,20 @@
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
+
+        <!-- mybatis -->
+        <dependency>
+            <groupId>org.mybatis.spring.boot</groupId>
+            <artifactId>mybatis-spring-boot-starter</artifactId>
+            <version>${mybatis.version}</version>
+        </dependency>
+
+        <!--&lt;!&ndash;MySQL&ndash;&gt;-->
+        <!--<dependency>-->
+        <!--    <groupId>mysql</groupId>-->
+        <!--    <artifactId>mysql-connector-java</artifactId>-->
+        <!--    <version>${mysql.connector.version}</version>-->
+        <!--</dependency>-->
 
         <!--<dependency>-->
         <!--    <groupId>org.junit.jupiter</groupId>-->
