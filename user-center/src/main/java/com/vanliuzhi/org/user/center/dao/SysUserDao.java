@@ -1,6 +1,7 @@
 package com.vanliuzhi.org.user.center.dao;
 
 import com.vanliuzhi.org.user.center.entity.SysUser;
+import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import java.util.List;
 
@@ -10,6 +11,7 @@ import java.util.List;
  * @author makejava
  * @since 2020-04-21 09:56:40
  */
+@Mapper
 public interface SysUserDao {
 
     /**

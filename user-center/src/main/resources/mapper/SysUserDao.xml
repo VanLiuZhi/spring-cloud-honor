@@ -18,25 +18,43 @@
 
     <!--查询单个-->
     <select id="queryById" resultMap="SysUserMap">
-        select
-          id, username, password, nickname, headImgUrl, phone, sex, enabled, type, createTime, updateTime
-        from honor-user-center.sys_user
+        select id,
+               username,
+               password,
+               nickname,
+               headImgUrl,
+               phone,
+               sex,
+               enabled,
+               type,
+               createTime,
+               updateTime
+        from `honor-user-center`.sys_user
         where id = #{id}
     </select>
 
     <!--查询指定行数据-->
     <select id="queryAllByLimit" resultMap="SysUserMap">
-        select
-          id, username, password, nickname, headImgUrl, phone, sex, enabled, type, createTime, updateTime
-        from honor-user-center.sys_user
+        select id,
+               username,
+               password,
+               nickname,
+               headImgUrl,
+               phone,
+               sex,
+               enabled,
+               type,
+               createTime,
+               updateTime
+        from `honor-user-center`.sys_user
         limit #{offset}, #{limit}
     </select>
 
     <!--通过实体作为筛选条件查询-->
     <select id="queryAll" resultMap="SysUserMap">
         select
-          id, username, password, nickname, headImgUrl, phone, sex, enabled, type, createTime, updateTime
-        from honor-user-center.sys_user
+        id, username, password, nickname, headImgUrl, phone, sex, enabled, type, createTime, updateTime
+        from `honor-user-center`.sys_user
         <where>
             <if test="id != null">
                 and id = #{id}
@@ -76,7 +94,7 @@
 
     <!--新增所有列-->
     <insert id="insert" keyProperty="id" useGeneratedKeys="true">
-        insert into honor-user-center.sys_user(username, password, nickname, headImgUrl, phone, sex, enabled, type, createTime, updateTime)
+        insert into `honor-user-center`.sys_user(username, password, nickname, headImgUrl, phone, sex, enabled, type, createTime, updateTime)
         values (#{username}, #{password}, #{nickname}, #{headimgurl}, #{phone}, #{sex}, #{enabled}, #{type}, #{createtime}, #{updatetime})
     </insert>
 
@@ -120,7 +138,9 @@
 
     <!--通过主键删除-->
     <delete id="deleteById">
-        delete from honor-user-center.sys_user where id = #{id}
+        delete
+        from `honor-user-center`.sys_user
+        where id = #{id}
     </delete>
 
 </mapper>
