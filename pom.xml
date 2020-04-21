@@ -19,6 +19,7 @@
         <module>oauth2-jwt</module>
         <module>oauth2-client</module>
         <module>oauth2-client2</module>
+        <module>custom-spring-boot-starter</module>
         <module>register-center</module>
         <module>api-gateway</module>
         <module>user-center</module>
@@ -28,6 +29,7 @@
         <java.version>1.8</java.version>
         <spring-boot.version>2.1.12.RELEASE</spring-boot.version>
         <spring-cloud-dependencies.version>Greenwich.SR5</spring-cloud-dependencies.version>
+        <spring-platform.version>Cairo-SR3</spring-platform.version>
 
         <!-- 通用依赖版本号 -->
         <swagger.version>2.9.2</swagger.version>
@@ -35,12 +37,18 @@
         <mybatis.version>2.1.0</mybatis.version>
         <jjwt.version>0.9.0</jjwt.version>
         <json.version>20140107</json.version>
+        <jasypt.version>1.14</jasypt.version>
     </properties>
 
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
         </dependency>
 
         <!-- spring boot test-->
@@ -90,6 +98,13 @@
                 <groupId>org.springframework.cloud</groupId>
                 <artifactId>spring-cloud-dependencies</artifactId>
                 <version>${spring-cloud-dependencies.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>io.spring.platform</groupId>
+                <artifactId>platform-bom</artifactId>
+                <version>${spring-platform.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>

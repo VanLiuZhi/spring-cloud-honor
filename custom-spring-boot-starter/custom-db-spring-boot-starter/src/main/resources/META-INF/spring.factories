@@ -1,0 +1,2 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+com.vanliuzhi.org.custom.datasource.CustomDataSourceAutoConfig

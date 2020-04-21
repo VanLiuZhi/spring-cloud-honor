@@ -2,10 +2,12 @@
 spring:
   datasource:
     # JDBC 配置(驱动类自动从url的mysql识别，数据源类型自动识别)
-    url: jdbc:mysql://127.0.0.1:9906/honor-user-center?useUnicode=true&characterEncoding=utf-8&allowMultiQueries=true&useSSL=false
+    url: jdbc:mysql://127.0.0.1:9906/rrd_store?useUnicode=true&characterEncoding=utf-8&allowMultiQueries=true&useSSL=false
     username: root
     password: test123456
     driver-class-name:  com.mysql.cj.jdbc.Driver
+    # 表明使用Druid连接池
+    type: com.alibaba.druid.pool.DruidDataSource
     # 连接池配置(通常来说，只需要修改initialSize、minIdle、maxActive)
     druid:
       # 初始化时建立物理连接的个数
@@ -104,42 +106,51 @@ mybatis-plus:
   global-config:
     banner: false
   configuration:
+    # 打印sql语句
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
   mapper-locations: classpath:mapper/*.xml
 
-#security:
-#  oauth2:
-#    ignored: /users-anon/**  , /doc.html   ,/document.html ,/users/save
-#    token:
-#      store:
-#        type: redis
-#
-## 设置最大超时时间
-#ribbon:
-#  ServerListRefreshInterval: 10  # 刷新服务列表源的间隔时间
-#  OkToRetryOnAllOperations: true
-#  MaxAutoRetries: 1
-#  MaxAutoRetriesNextServer: 1
-#  ReadTimeout: 16000
-#  ConnectTimeout: 16000
-#
-## 设置最大容错超时时间
-#hystrix:
-#  command:
-#    default:
-#      execution:
-#        timeout:
-#          enabled: true
-#        isolation:
-#          thread:
-#            timeoutInMilliseconds: 16000
+mybatis:
+  configuration:
+    # 驼峰转换
+    map-underscore-to-camel-case: true
+    # 延迟加载
+    lazy-loading-enabled: true
+  #  mapper-locations: classpath:mapper/*.xml
 
-#logging:
-#  level:
-#    com.open.capacity: INFO
-#    org.hibernate: INFO
-#    org.hibernate.type.descriptor.sql.BasicBinder: TRACE
-#    org.hibernate.type.descriptor.sql.BasicExtractor: TRACE
+  #security:
+  #  oauth2:
+  #    ignored: /users-anon/**  , /doc.html   ,/document.html ,/users/save
+  #    token:
+  #      store:
+  #        type: redis
+  #
+  ## 设置最大超时时间
+  #ribbon:
+  #  ServerListRefreshInterval: 10  # 刷新服务列表源的间隔时间
+  #  OkToRetryOnAllOperations: true
+  #  MaxAutoRetries: 1
+  #  MaxAutoRetriesNextServer: 1
+  #  ReadTimeout: 16000
+  #  ConnectTimeout: 16000
+  #
+  ## 设置最大容错超时时间
+  #hystrix:
+  #  command:
+  #    default:
+  #      execution:
+  #        timeout:
+  #          enabled: true
+  #        isolation:
+  #          thread:
+  #            timeoutInMilliseconds: 16000
+
+  #logging:
+  #  level:
+  #    com.open.capacity: INFO
+  #    org.hibernate: INFO
+  #    org.hibernate.type.descriptor.sql.BasicBinder: TRACE
+  #    org.hibernate.type.descriptor.sql.BasicExtractor: TRACE
   # com.neusoft: DEBUG
   # com.netflix: DEBUG #用于心跳检测输出的日志
 
