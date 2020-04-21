@@ -9,10 +9,15 @@
     </parent>
     <artifactId>custom-spring-boot-starter</artifactId>
     <name>${project.artifactId}</name>
-    <description>spring boot starter 风格扩展模块</description>
+    <description>
+        spring boot starter 风格扩展模块，包括:
+        基于spring SPI 自动装配的
+        基于注解装配的
+    </description>
 
     <modules>
         <module>custom-db-spring-boot-starter</module>
+        <module>custom-log-spring-boot-starter</module>
     </modules>
 
 </project>
