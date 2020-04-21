@@ -18,6 +18,8 @@
     <modules>
         <module>custom-db-spring-boot-starter</module>
         <module>custom-log-spring-boot-starter</module>
+        <module>custom-auth-server-spring-boot-starter</module>
+        <module>custom-resource-server-spring-boot-starter</module>
     </modules>
 
 </project>
