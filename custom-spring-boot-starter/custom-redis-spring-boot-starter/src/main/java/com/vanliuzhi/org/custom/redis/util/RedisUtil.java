@@ -12,16 +12,14 @@ import java.util.List;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
-
 /**
- * @author 作者 owen
- * @version 创建时间：2017年04月23日 下午20:01:06 类说明
- * redis工具类
+ * @Description Redis工具类
+ * @Author VanLiuZhi
+ * @Date 2020-04-19 23:48
  */
 @Slf4j
 @SuppressWarnings("all")
 public class RedisUtil {
-
 
     private StringRedisTemplate stringRedisTemplate;
 
@@ -50,7 +48,6 @@ public class RedisUtil {
         this.stringRedisTemplate = stringRedisTemplate;
         this.hashOperations = hashOperations;
     }
-
 
     /**
      * 获取消息

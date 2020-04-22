@@ -33,16 +33,17 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
- * @Description Redis 自动装配
+ * @Description Redis 自动装配，主要是封装的工具和redissonClient两个bean
  * @Author VanLiuZhi
  * @Date 2020-04-19 23:48
  */
 @Configuration
 @SuppressWarnings("all")
 @AutoConfigureBefore(RedisTemplate.class)
-@EnableConfigurationProperties(RedissonProperties.class)
+@EnableConfigurationProperties(RedissonProperties.class) // 将@ConfigurationProperties 注解的bean注入到容器
 public class RedisAutoConfig {
 
+    // 由于 @EnableConfigurationProperties 注解的原因，这里可以拿到bean了
     @Autowired(required = false)
     private RedissonProperties redissonProperties;
 
@@ -52,6 +53,7 @@ public class RedisAutoConfig {
     @Autowired
     private ApplicationContext ctx;
 
+    // 使用Lettuce作为客户端
     @Autowired(required = false)
     private LettuceConnectionFactory lettuceConnectionFactory;
 
@@ -67,17 +69,13 @@ public class RedisAutoConfig {
     public RedisTemplate<String, Object> getRedisTemplate() {
         RedisTemplate<String, Object> redisTemplate = new RedisTemplate<String, Object>();
         redisTemplate.setConnectionFactory(lettuceConnectionFactory);
-
         RedisSerializer stringSerializer = new StringRedisSerializer();
-        // RedisSerializer redisObjectSerializer = new RedisObjectSerializer();
         RedisSerializer redisObjectSerializer = new RedisObjectSerializer();
         redisTemplate.setKeySerializer(stringSerializer); // key的序列化类型
         redisTemplate.setHashKeySerializer(stringSerializer);
         redisTemplate.setValueSerializer(redisObjectSerializer); // value的序列化类型
-        redisTemplate.setHashValueSerializer(redisObjectSerializer); // value的序列化类型
+        redisTemplate.setHashValueSerializer(redisObjectSerializer); // Hash value的序列化类型
         redisTemplate.afterPropertiesSet();
-
-        redisTemplate.opsForValue().set("hello", "wolrd");
         return redisTemplate;
     }
 
@@ -91,11 +89,11 @@ public class RedisAutoConfig {
     @ConditionalOnProperty(name = "spring.redis.host", matchIfMissing = true)
     public RedisTemplate<String, Object> getSingleRedisTemplate() {
         RedisTemplate<String, Object> redisTemplate = new RedisTemplate<String, Object>();
-        RedisSerializer redisObjectSerializer = new RedisObjectSerializer();
         redisTemplate.setConnectionFactory(lettuceConnectionFactory);
+        RedisSerializer redisObjectSerializer = new RedisObjectSerializer();
         redisTemplate.setKeySerializer(new StringRedisSerializer()); // key的序列化类型
         redisTemplate.setValueSerializer(redisObjectSerializer); // value的序列化类型
-        redisTemplate.setHashValueSerializer(redisObjectSerializer);
+        redisTemplate.setHashValueSerializer(redisObjectSerializer); // Hash value的序列化类型
         redisTemplate.afterPropertiesSet();
         return redisTemplate;
     }
