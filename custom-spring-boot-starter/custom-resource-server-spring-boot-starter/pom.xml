@@ -12,16 +12,84 @@
 	<description>自定义资源服务器</description>
 
 	<dependencies>
+		<!--&lt;!&ndash; 公共实体类模块 &ndash;&gt;-->
+		<!--<dependency>-->
+		<!--	<groupId>com.open.capacity</groupId>-->
+		<!--	<artifactId>common-spring-boot-starter</artifactId>-->
+		<!--</dependency>-->
+		<!--&lt;!&ndash; 关系型和非关系型数据库配置 &ndash;&gt;-->
+		<!--<dependency>-->
+		<!--	<groupId>com.open.capacity</groupId>-->
+		<!--	<artifactId>db-spring-boot-starter</artifactId>-->
+		<!--</dependency>-->
 
+		<!--<dependency>-->
+		<!--	<groupId>com.open.capacity</groupId>-->
+		<!--	<artifactId>redis-spring-boot-starter</artifactId>-->
+		<!--</dependency>-->
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-web</artifactId>
+		</dependency>
+
+		<!--<dependency>-->
+		<!--	<groupId>org.springframework</groupId>-->
+		<!--	<artifactId>spring-context-support</artifactId>-->
+		<!--</dependency>-->
+
+		<!--&lt;!&ndash; 加入spring security spring security oauth2的处理 &ndash;&gt;-->
+		<!--&lt;!&ndash;<dependency>&ndash;&gt;-->
+		<!--&lt;!&ndash;	<groupId>org.springframework.security.oauth</groupId>&ndash;&gt;-->
+		<!--&lt;!&ndash;	<artifactId>spring-security-oauth2</artifactId>&ndash;&gt;-->
+		<!--&lt;!&ndash;</dependency>&ndash;&gt;-->
+		<!--&lt;!&ndash;# TODO 依赖原因，先用下面这个&ndash;&gt;-->
+		<!--<dependency>-->
+		<!--	<groupId>org.springframework.cloud</groupId>-->
+		<!--	<artifactId>spring-cloud-starter-oauth2</artifactId>-->
+		<!--</dependency>-->
+
+		<!--&lt;!&ndash; https://mvnrepository.com/artifact/org.springframework.security/spring-security-jwt &ndash;&gt;-->
+		<!--<dependency>-->
+		<!--	<groupId>org.springframework.security</groupId>-->
+		<!--	<artifactId>spring-security-jwt</artifactId>-->
+		<!--</dependency>-->
+
+		<!--<dependency>-->
+		<!--	<groupId>org.springframework.social</groupId>-->
+		<!--	<artifactId>spring-social-web</artifactId>-->
+		<!--</dependency>-->
+
+		<!--<dependency>-->
+		<!--	<groupId>org.springframework.boot</groupId>-->
+		<!--	<artifactId>spring-boot-configuration-processor</artifactId>-->
+		<!--	<optional>true</optional>-->
+		<!--</dependency>-->
+
+		<!--<dependency>-->
+		<!--	<groupId>javax.xml.bind</groupId>-->
+		<!--	<artifactId>jaxb-api</artifactId>-->
+		<!--	<version>2.3.0</version>-->
+		<!--	&lt;!&ndash;<optional>true</optional>&ndash;&gt;-->
+		<!--</dependency>-->
+		<!--<dependency>-->
+		<!--	<groupId>com.sun.xml.bind</groupId>-->
+		<!--	<artifactId>jaxb-impl</artifactId>-->
+		<!--	<version>2.3.0</version>-->
+		<!--	&lt;!&ndash;<optional>true</optional>&ndash;&gt;-->
+		<!--</dependency>-->
+		<!--<dependency>-->
+		<!--	<groupId>com.sun.xml.bind</groupId>-->
+		<!--	<artifactId>jaxb-core</artifactId>-->
+		<!--	<version>2.3.0</version>-->
+		<!--	&lt;!&ndash;<optional>true</optional>&ndash;&gt;-->
+		<!--</dependency>-->
+		<!--<dependency>-->
+		<!--	<groupId>javax.activation</groupId>-->
+		<!--	<artifactId>activation</artifactId>-->
+		<!--	<version>1.1.1</version>-->
+		<!--	&lt;!&ndash;<optional>true</optional>&ndash;&gt;-->
+		<!--</dependency>-->
 	</dependencies>
-
-	<build>
-		<plugins>
-			<plugin>
-				<groupId>org.springframework.boot</groupId>
-				<artifactId>spring-boot-maven-plugin</artifactId>
-			</plugin>
-		</plugins>
-	</build>
 
 </project>

@@ -20,6 +20,7 @@
         <module>custom-log-spring-boot-starter</module>
         <module>custom-auth-server-spring-boot-starter</module>
         <module>custom-resource-server-spring-boot-starter</module>
+        <module>custom-redis-spring-boot-starter</module>
     </modules>
 
 </project>
