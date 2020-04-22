@@ -15,13 +15,13 @@
     <name>honor-parent</name>
     <description>父依赖</description>
 
-
     <modules>
         <module>oauth2-simple</module>
         <module>oauth2-jwt</module>
         <module>oauth2-client</module>
         <module>oauth2-client2</module>
         <module>custom-spring-boot-starter</module>
+        <module>common-module</module>
         <module>register-center</module>
         <module>api-gateway</module>
         <module>user-center</module>
@@ -50,10 +50,13 @@
         <jjwt.version>0.9.0</jjwt.version>
         <json.version>20140107</json.version>
         <jasypt.version>1.14</jasypt.version>
+        <hutool.version>4.1.13</hutool.version>
+        <fastjson.version>1.2.60</fastjson.version>
         <security-oauth2.version>2.3.6.RELEASE</security-oauth2.version>
     </properties>
 
     <dependencies>
+        <!--核心启动器，包括支持自动配置、日志记录及 YAML-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter</artifactId>
@@ -63,12 +66,11 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-actuator</artifactId>
         </dependency>
-
+        <!--lombok 模块-->
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
         </dependency>
-
         <!-- spring boot test-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -105,6 +107,7 @@
 
     <dependencyManagement>
         <dependencies>
+            <!--spring-boot dependencies-->
             <dependency>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-dependencies</artifactId>
@@ -112,6 +115,7 @@
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
+            <!--spring-cloud dependencies-->
             <dependency>
                 <groupId>org.springframework.cloud</groupId>
                 <artifactId>spring-cloud-dependencies</artifactId>
@@ -119,6 +123,7 @@
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
+            <!--platform 依赖-->
             <dependency>
                 <groupId>io.spring.platform</groupId>
                 <artifactId>platform-bom</artifactId>
@@ -126,7 +131,24 @@
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
-
+            <!--数据库starter-->
+            <dependency>
+                <groupId>com.vanliuzhi.org</groupId>
+                <artifactId>custom-db-spring-boot-starter</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <!--缓存starter-->
+            <dependency>
+                <groupId>com.vanliuzhi.org</groupId>
+                <artifactId>custom-redis-spring-boot-starter</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <!--公共模块依赖-->
+            <dependency>
+                <groupId>com.vanliuzhi.org</groupId>
+                <artifactId>common-module</artifactId>
+                <version>${project.version}</version>
+            </dependency>
             <!--<dependency>-->
             <!--    <groupId>org.springframework.security.oauth</groupId>-->
             <!--    <artifactId>spring-security-oauth2</artifactId>-->

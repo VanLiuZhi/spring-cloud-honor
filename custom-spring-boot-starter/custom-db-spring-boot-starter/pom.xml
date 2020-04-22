@@ -28,7 +28,8 @@
         <dependency>
             <groupId>com.google.guava</groupId>
             <artifactId>guava</artifactId>
-            <version>20.0</version>
+            <!--显示的指明的话，版本号用下面这么-->
+            <!--<version>20.0</version>-->
         </dependency>
 
         <!-- druid 官方 starter -->

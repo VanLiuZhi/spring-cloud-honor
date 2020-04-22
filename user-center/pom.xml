@@ -10,6 +10,7 @@
     <artifactId>user-center</artifactId>
     <name>user-center</name>
     <description>用户中心</description>
+    <version>${revision}</version>
 
     <dependencies>
         <!--eureka 注册中心 客户端-->

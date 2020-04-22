@@ -10,7 +10,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * @Description
+ * @Description 增强jwt，可以注入一些数据(具体能注入的数据，看方法参数)，这样默认的jwt可以被自定义
+ *
+ * TokenEnhancer 实现该接口，就可以定义一个jwt增强对象
+ *
  * @Author VanLiuZhi
  * @Date 2020-04-20 10:48
  */
