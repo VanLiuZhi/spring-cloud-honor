@@ -5,10 +5,11 @@
     <parent>
         <groupId>com.vanliuzhi.org</groupId>
         <artifactId>honor-parent</artifactId>
-        <version>0.0.1-SNAPSHOT</version>
+        <version>${revision}</version>
     </parent>
     <artifactId>custom-spring-boot-starter</artifactId>
     <name>${project.artifactId}</name>
+    <packaging>pom</packaging>
     <description>
         spring boot starter 风格扩展模块，包括:
         基于spring SPI 自动装配的

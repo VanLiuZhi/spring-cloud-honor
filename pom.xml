@@ -10,9 +10,11 @@
     </parent>
     <groupId>com.vanliuzhi.org</groupId>
     <artifactId>honor-parent</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <packaging>pom</packaging>
+    <version>${revision}</version>
     <name>honor-parent</name>
     <description>父依赖</description>
+
 
     <modules>
         <module>oauth2-simple</module>
@@ -27,11 +29,20 @@
     </modules>
 
     <properties>
+        <!-- 项目版本号 -->
+        <revision>1.0.0-SNAPSHOT</revision>
+        <!-- jdk -->
         <java.version>1.8</java.version>
+        <!-- 编译 -->
+        <javadoc.version>3.0.0</javadoc.version>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <maven.compiler.source>${java.version}</maven.compiler.source>
+        <maven.compiler.target>${java.version}</maven.compiler.target>
+        <!-- Spring boot, cloud, platform -->
         <spring-boot.version>2.1.12.RELEASE</spring-boot.version>
         <spring-cloud-dependencies.version>Greenwich.SR5</spring-cloud-dependencies.version>
         <spring-platform.version>Cairo-SR3</spring-platform.version>
-
         <!-- 通用依赖版本号 -->
         <swagger.version>2.9.2</swagger.version>
         <mysql.connector.version>5.1.47</mysql.connector.version>
@@ -108,13 +119,13 @@
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
-            <!--<dependency>-->
-            <!--    <groupId>io.spring.platform</groupId>-->
-            <!--    <artifactId>platform-bom</artifactId>-->
-            <!--    <version>${spring-platform.version}</version>-->
-            <!--    <type>pom</type>-->
-            <!--    <scope>import</scope>-->
-            <!--</dependency>-->
+            <dependency>
+                <groupId>io.spring.platform</groupId>
+                <artifactId>platform-bom</artifactId>
+                <version>${spring-platform.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
 
             <!--<dependency>-->
             <!--    <groupId>org.springframework.security.oauth</groupId>-->

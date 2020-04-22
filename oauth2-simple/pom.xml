@@ -5,7 +5,7 @@
     <parent>
         <groupId>com.vanliuzhi.org</groupId>
         <artifactId>honor-parent</artifactId>
-        <version>0.0.1-SNAPSHOT</version>
+        <version>${revision}</version>
     </parent>
     <artifactId>oauth2-simple</artifactId>
     <name>oauth2-simple</name>

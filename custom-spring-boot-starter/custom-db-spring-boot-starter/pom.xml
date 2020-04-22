@@ -4,8 +4,8 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>com.vanliuzhi.org</groupId>
-        <artifactId>honor-parent</artifactId>
-        <version>0.0.1-SNAPSHOT</version>
+        <artifactId>custom-spring-boot-starter</artifactId>
+        <version>${revision}</version>
     </parent>
     <artifactId>custom-db-spring-boot-starter</artifactId>
     <name>custom-db-spring-boot-starter</name>
