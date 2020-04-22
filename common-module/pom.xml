@@ -14,7 +14,7 @@
 	<properties>
 		<orika-version>1.5.2</orika-version>
 		<modelmapper-version>2.3.3</modelmapper-version>
-		<xss-version>1.5.5</xss-version>
+		<xss-version>1.5.7</xss-version>
 	</properties>
 
 	<dependencies>
