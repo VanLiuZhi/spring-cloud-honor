@@ -32,7 +32,6 @@ import com.vanliuzhi.org.custom.resource.server.authorize.AuthorizeConfigManager
  * @Author VanLiuZhi
  * @Date 2020-04-20 14:34
  */
-@Component
 @Configuration
 @EnableResourceServer
 @SuppressWarnings("all")

@@ -27,7 +27,6 @@ import java.util.Map;
  * @Author VanLiuZhi
  * @Date 2020-04-20 14:34
  */
-@Component
 @Configuration
 public class SecurityHandlerConfig {
 
