@@ -14,11 +14,13 @@ import org.springframework.core.annotation.Order;
  * @Description 切换数据源Advice
  * @Author VanLiuZhi
  * @Date 2020-04-20 14:34
+ *
+ * Order(-1) 保证该AOP在@Transactional之前执行
  */
 @Slf4j
 @Aspect
-@Order(-1) // 保证该AOP在@Transactional之前执行
-public class DataSourceAOP {
+@Order(-1)
+public class DataSourceAop {
 
     @Before("@annotation(ds)")
     public void changeDataSource(JoinPoint point, DataSource ds) throws Throwable {

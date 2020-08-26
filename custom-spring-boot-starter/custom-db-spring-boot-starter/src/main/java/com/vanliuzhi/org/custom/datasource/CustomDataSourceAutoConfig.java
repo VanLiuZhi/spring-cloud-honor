@@ -3,7 +3,7 @@ package com.vanliuzhi.org.custom.datasource;
 import com.alibaba.druid.spring.boot.autoconfigure.DruidDataSourceAutoConfigure;
 import com.alibaba.druid.spring.boot.autoconfigure.DruidDataSourceBuilder;
 import com.baomidou.mybatisplus.autoconfigure.MybatisPlusAutoConfiguration;
-import com.vanliuzhi.org.custom.datasource.aop.DataSourceAOP;
+import com.vanliuzhi.org.custom.datasource.aop.DataSourceAop;
 import com.vanliuzhi.org.custom.datasource.constant.DataSourceKey;
 import com.vanliuzhi.org.custom.datasource.util.DynamicDataSource;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -24,29 +24,34 @@ import javax.sql.DataSource;
  * @Date 2020-04-22 14:13
  */
 @Configuration
-@Import(DataSourceAOP.class)
+@Import(DataSourceAop.class)
 @AutoConfigureBefore(value = {DruidDataSourceAutoConfigure.class, MybatisPlusAutoConfiguration.class})
 @ConditionalOnProperty(name = {"spring.datasource.dynamic.enable"}, matchIfMissing = false, havingValue = "true")
 public class CustomDataSourceAutoConfig {
 
-    // 创建数据源
-    // 所有引入db-core的模块都需要一个核心库，可以是user-center，也可以是oauth-center, file-center, sms-center
+    /**
+     * 创建数据源，所有引入db-core的模块都需要一个核心库，可以是user-center，也可以是oauth-center, file-center, sms-center
+     */
     @Bean
     @ConfigurationProperties("spring.datasource.druid.core")
     public DataSource dataSourceCore() {
         return DruidDataSourceBuilder.create().build();
     }
 
-    // 所有的核心库共享一个日志中心模块，该模块不采用mysql中的innodb引擎，采用归档引擎
+    /**
+     * 所有的核心库共享一个日志中心模块，该模块不采用mysql中的innodb引擎，采用归档引擎
+     */
     @Bean
     @ConfigurationProperties("spring.datasource.druid.log")
     public DataSource dataSourceLog() {
         return DruidDataSourceBuilder.create().build();
-
     }
 
+    /**
+     * 只需要纳入动态数据源到spring容器
+     */
     @Primary
-    @Bean // 只需要纳入动态数据源到spring容器
+    @Bean
     public DataSource dataSource() {
         DynamicDataSource dataSource = new DynamicDataSource();
         DataSource coreDataSource = dataSourceCore();
@@ -57,7 +62,10 @@ public class CustomDataSourceAutoConfig {
         return dataSource;
     }
 
-    @Bean // 将数据源纳入spring事物管理
+    /**
+     * 将数据源纳入spring事物管理
+     */
+    @Bean
     public DataSourceTransactionManager transactionManager(@Qualifier("dataSource") DataSource dataSource) {
         return new DataSourceTransactionManager(dataSource);
     }

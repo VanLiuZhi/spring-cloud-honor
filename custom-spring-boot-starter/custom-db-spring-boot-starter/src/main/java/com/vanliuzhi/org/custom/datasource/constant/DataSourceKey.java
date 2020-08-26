@@ -6,5 +6,8 @@ package com.vanliuzhi.org.custom.datasource.constant;
  * @Date 2020-04-20 14:34
  */
 public enum DataSourceKey {
-    core, log
+    // 一般情况
+    core,
+    // 存储trace日志
+    log
 }
