@@ -1,15 +1,15 @@
 server:
   port: 9999
-spring:
-  profiles:
-    active: dev
-  jackson:
-    date-format: yyyy-MM-dd HH:mm:ss
-  redis:
-    database: 0
-    port: 6379
-    host: localhost
-    password:
+#spring:
+#  profiles:
+#    active: dev
+#  jackson:
+#    date-format: yyyy-MM-dd HH:mm:ss
+#  redis:
+#    database: 0
+#    port: 6379
+#    host: localhost
+#    password:
 management:
   endpoints:
     web:

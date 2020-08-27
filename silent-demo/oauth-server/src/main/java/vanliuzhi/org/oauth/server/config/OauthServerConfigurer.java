@@ -1,9 +1,12 @@
 package vanliuzhi.org.oauth.server.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.config.annotation.configurers.ClientDetailsServiceConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configuration.AuthorizationServerConfigurerAdapter;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableAuthorizationServer;
@@ -15,88 +18,123 @@ import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.security.oauth2.provider.token.store.InMemoryTokenStore;
 
 /**
- * @author: 190coder <190coder.cn>
- * @description: 当前类为Oauth2 server的配置类（需要继承特定的⽗类)
- * @create: 2020-07-30 20:03
+ * 授权服务器配置
+ *
+ * @author lys3415
  */
 @Configuration
 @EnableAuthorizationServer
 public class OauthServerConfigurer extends AuthorizationServerConfigurerAdapter {
 
-
+    /**
+     * 认证管理对象，使用默认实现
+     */
     @Autowired
     private AuthenticationManager authenticationManager;
 
     /**
-     * 认证服务器最终是以api接⼝的⽅式对外提供服务（校验合法性并⽣成令牌、校验令牌等）
-     * 那么，以api接⼝⽅式对外的话，就涉及到接⼝的访问权限，我们需要在这⾥进⾏必要的配置
-     *
-     * @param security
-     * @throws Exception
+     * 该对象用来将令牌信息存储到内存中
+     * OAuth2令牌持久化主要有以下几种
+     * <p>
+     * 1. InMemoryTokenStore  内存存储 OAuth2默认储存方式
+     * 2. JdbcTokenStore  数据库存储
+     * 3. RedisTokenStore Redis存储
+     * 4. JwkTokenStore & JwtTokenStore
+     */
+    @Autowired(required = false)
+    private TokenStore inMemoryTokenStore;
+
+    /**
+     * 获取用户详情
+     */
+    @Autowired
+    private UserDetailsService userDetailsService;
+
+    /**
+     * 指定密码的加密方式
+     * 推荐使用 BCryptPasswordEncoder, Pbkdf2PasswordEncoder, SCryptPasswordEncoder
+     */
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        // 使用BCrypt强哈希函数加密方案（密钥迭代次数默认为10）
+        return new BCryptPasswordEncoder();
+    }
+
+    /**
+     * 用来配置令牌端点(Token Endpoint)的安全约束
      */
     @Override
     public void configure(AuthorizationServerSecurityConfigurer security) throws Exception {
-        super.configure(security);
-
-        // 相当于打开endpoints 访问接⼝的开关，这样的话后期我们能够访问该接⼝
-        security.
-                // 允许客户端表单认证
-                        allowFormAuthenticationForClients()
-                // 开启端⼝/oauth/token_key的访问权限（允许）
-                .tokenKeyAccess("permitAll()")
-                // 开启端⼝/oauth/check_token的访问权限（允许）
-                .checkTokenAccess("permitAll()");
-
+        // super.configure(security);
+        //
+        // // 相当于打开endpoints 访问接⼝的开关，这样的话后期我们能够访问该接⼝
+        // security.
+        //         // 允许客户端表单认证
+        //                 allowFormAuthenticationForClients()
+        //         // 开启端⼝/oauth/token_key的访问权限（允许）
+        //         .tokenKeyAccess("permitAll()")
+        //         // 开启端⼝/oauth/check_token的访问权限（允许）
+        //         .checkTokenAccess("permitAll()");
+        // 表示支持 client_id 和 client_secret 做登录认证
+        security.allowFormAuthenticationForClients();
     }
 
     /**
-     * 客户端详情配置，
-     * ⽐如client_id，secret
-     * 当前这个服务就如同QQ平台，拉勾⽹作为客户端需要qq平台进⾏登录授权认证等，提前需
-     * 要到QQ平台注册，QQ平台会给拉勾⽹
-     * 颁发client_id等必要参数，表明客户端是谁
-     *
-     * @param clients
-     * @throws Exception
+     * 用来配置客户端详情服务
      */
     @Override
     public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
-        super.configure(clients);
+        // super.configure(clients);
 
-        clients.
-                // 客户端信息存储在什么地⽅，可以在内存中，可以在数据库⾥
-                        inMemory()
-                // 添加⼀个client配置,指定其client_id
-                .withClient("client_lagou")
-                // 指定客户端的密码/安全码
-                .secret("abcxyz")
-                // 指定客户端所能访问资源
-                .resourceIds("autodeliver")
-                // 认证类型/令牌颁发模式，可以配置多个在这⾥，但是不⼀定都⽤，具体使⽤哪种⽅式颁发token，需要客户端调⽤的时候传递参数指定
+        // clients.
+        //         // 客户端信息存储在什么地⽅，可以在内存中，可以在数据库⾥
+        //                 inMemory()
+        //         // 添加⼀个client配置,指定其client_id
+        //         .withClient("client")
+        //         // 指定客户端的密码/安全码
+        //         .secret("abcxyz")
+        //         // 指定客户端所能访问资源
+        //         .resourceIds("autodeliver")
+        //         // 认证类型/令牌颁发模式，可以配置多个在这⾥，但是不⼀定都⽤，具体使⽤哪种⽅式颁发token，需要客户端调⽤的时候传递参数指定
+        //         .authorizedGrantTypes("password", "refresh_token")
+        //         // 客户端的权限范围，此处配置为all全部即可
+        //         .scopes("all");
+
+        // 这里显示配置，客户端是固定的，实际情况最好通过数据库获取客户端信息，方便扩展
+        clients.inMemory()
+                .withClient("vanliuzhi")
+                //授权模式为password和refresh_token两种
                 .authorizedGrantTypes("password", "refresh_token")
+                // 配置access_token的过期时间
+                .accessTokenValiditySeconds(1800)
+                //配置资源id
+                .resourceIds("myResource")
                 // 客户端的权限范围，此处配置为all全部即可
-                .scopes("all");
+                .scopes("all")
+                //123加密后的密码
+                .secret("$2a$10$tnj.nZjSzCBckTh2fRRK9.ZTYfU0y4pDiZZChKxxeOElBsxaQCn26");
     }
 
     /**
-     * 认证服务器是玩转token的，那么这⾥配置token令牌管理相关（token此时就是⼀个字符
-     * 串，当下的token需要在服务器端存储，那么存储在哪⾥呢？都是在这⾥配置）
-     *
-     * @param endpoints
-     * @throws Exception
+     * 来配置授权（authorization）以及令牌（token）的访问端点和令牌服务(token services)
      */
     @Override
     public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
-        super.configure(endpoints);
+        // super.configure(endpoints);
+        //
+        // endpoints
+        //         // 指定token的存储⽅法
+        //         .tokenStore(tokenStore())
+        //         //token服务的⼀个描述，可以认为是token⽣成细节的描述，⽐如有效时间多少等
+        //         .tokenServices(authorizationServerTokenServices())
+        //         // 指定认证管 理器，随后注⼊⼀个到当前类使⽤即可
+        //         .authenticationManager(authenticationManager)
+        //         .allowedTokenEndpointRequestMethods(HttpMethod.GET, HttpMethod.POST);
 
-        endpoints
-                // 指定token的存储⽅法
-                .tokenStore(tokenStore())
-                //token服务的⼀个描述，可以认为是token⽣成细节的描述，⽐如有效时间多少等
-                .tokenServices(authorizationServerTokenServices())
-                // 指定认证管 理器，随后注⼊⼀个到当前类使⽤即可
+        //配置令牌的存储（这里存放在内存中）
+        endpoints.tokenStore(inMemoryTokenStore)
                 .authenticationManager(authenticationManager)
-                .allowedTokenEndpointRequestMethods(HttpMethod.GET, HttpMethod.POST);
+                .userDetailsService(userDetailsService);
     }
 
     /**
