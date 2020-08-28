@@ -3,6 +3,7 @@ package vanliuzhi.org.oauth.server.config;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -16,6 +17,7 @@ import org.springframework.security.oauth2.provider.token.AuthorizationServerTok
 import org.springframework.security.oauth2.provider.token.DefaultTokenServices;
 import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.security.oauth2.provider.token.store.InMemoryTokenStore;
+import org.springframework.security.oauth2.provider.token.store.redis.RedisTokenStore;
 
 /**
  * 授权服务器配置
@@ -51,6 +53,12 @@ public class OauthServerConfigurer extends AuthorizationServerConfigurerAdapter 
     public TokenStore tokenStore() {
         return new InMemoryTokenStore();
     }
+
+    /**
+     * 该对象用来将令牌信息存储到Redis中
+     */
+    @Autowired
+    private RedisConnectionFactory redisConnectionFactory;
 
     /**
      * 指定密码的加密方式
@@ -127,7 +135,7 @@ public class OauthServerConfigurer extends AuthorizationServerConfigurerAdapter 
         //         .allowedTokenEndpointRequestMethods(HttpMethod.GET, HttpMethod.POST);
 
         //配置令牌的存储（这里存放在内存中）
-        endpoints.tokenStore(tokenStore())
+        endpoints.tokenStore(new RedisTokenStore(redisConnectionFactory))
                 .authenticationManager(authenticationManager)
                 .userDetailsService(userDetailsService);
     }

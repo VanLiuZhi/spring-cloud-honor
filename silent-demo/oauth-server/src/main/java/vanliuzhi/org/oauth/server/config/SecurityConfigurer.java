@@ -17,7 +17,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 public class SecurityConfigurer extends WebSecurityConfigurerAdapter {
 
     /**
-     * 注册⼀个认证管理器对象到容器
+     * 注册⼀个认证管理器对象到容器，给授权服务器使用
      */
     @Bean
     @Override
@@ -25,6 +25,9 @@ public class SecurityConfigurer extends WebSecurityConfigurerAdapter {
         return super.authenticationManagerBean();
     }
 
+    /**
+     * 注册⼀个用户详情对象到容器，给授权服务器使用
+     */
     @Bean
     @Override
     protected UserDetailsService userDetailsService() {
