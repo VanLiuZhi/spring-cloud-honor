@@ -1,9 +1,11 @@
 package vanliuzhi.org.oauth.server.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -13,11 +15,13 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.A
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableAuthorizationServer;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerEndpointsConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerSecurityConfigurer;
-import org.springframework.security.oauth2.provider.token.AuthorizationServerTokenServices;
-import org.springframework.security.oauth2.provider.token.DefaultTokenServices;
-import org.springframework.security.oauth2.provider.token.TokenStore;
+import org.springframework.security.oauth2.provider.token.*;
 import org.springframework.security.oauth2.provider.token.store.InMemoryTokenStore;
-import org.springframework.security.oauth2.provider.token.store.redis.RedisTokenStore;
+import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
+import vanliuzhi.org.oauth.server.component.HxTokenEnhancer;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 授权服务器配置
@@ -42,6 +46,22 @@ public class OauthServerConfigurer extends AuthorizationServerConfigurerAdapter 
     private UserDetailsService userDetailsService;
 
     /**
+     * 该对象用来将令牌信息存储到Redis中
+     */
+    @Autowired
+    private RedisConnectionFactory redisConnectionFactory;
+
+    @Autowired
+    private JwtAccessTokenConverter jwtAccessTokenConverter;
+
+    @Autowired
+    @Qualifier("jwtTokenStore")
+    private TokenStore tokenStore;
+
+    @Autowired
+    private HxTokenEnhancer tokenEnhancer;
+
+    /**
      * 该⽅法⽤于创建tokenStore对象（令牌存储对象）token以什么形式存储
      * <p>
      * 1. InMemoryTokenStore  内存存储 OAuth2默认储存方式
@@ -53,12 +73,6 @@ public class OauthServerConfigurer extends AuthorizationServerConfigurerAdapter 
     public TokenStore tokenStore() {
         return new InMemoryTokenStore();
     }
-
-    /**
-     * 该对象用来将令牌信息存储到Redis中
-     */
-    @Autowired
-    private RedisConnectionFactory redisConnectionFactory;
 
     /**
      * 指定密码的加密方式
@@ -124,7 +138,6 @@ public class OauthServerConfigurer extends AuthorizationServerConfigurerAdapter 
     @Override
     public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
         // super.configure(endpoints);
-        //
         // endpoints
         //         // 指定token的存储⽅法
         //         .tokenStore(tokenStore())
@@ -134,10 +147,28 @@ public class OauthServerConfigurer extends AuthorizationServerConfigurerAdapter 
         //         .authenticationManager(authenticationManager)
         //         .allowedTokenEndpointRequestMethods(HttpMethod.GET, HttpMethod.POST);
 
-        //配置令牌的存储（这里存放在内存中）
-        endpoints.tokenStore(new RedisTokenStore(redisConnectionFactory))
+        // 配置令牌的存储（这里存放在内存中）
+        // endpoints.tokenStore(new RedisTokenStore(redisConnectionFactory))
+        //         .authenticationManager(authenticationManager)
+        //         .userDetailsService(userDetailsService);
+
+        TokenEnhancerChain tokenEnhancerChain = new TokenEnhancerChain();
+        List<TokenEnhancer> enhancerList = new ArrayList<>();
+        enhancerList.add(jwtAccessTokenConverter);
+        enhancerList.add(tokenEnhancer);
+        tokenEnhancerChain.setTokenEnhancers(enhancerList);
+
+        endpoints.tokenStore(tokenStore)
                 .authenticationManager(authenticationManager)
-                .userDetailsService(userDetailsService);
+                .userDetailsService(userDetailsService)
+                .tokenEnhancer(tokenEnhancerChain) // 配置增强
+                .accessTokenConverter(jwtAccessTokenConverter);
+
+        //配置使用jwt存储token
+        // endpoints.tokenStore(tokenStore)
+        //         .authenticationManager(authenticationManager)
+        //         .userDetailsService(userDetailsService)
+        //         .accessTokenConverter(jwtAccessTokenConverter);
     }
 
     /**
