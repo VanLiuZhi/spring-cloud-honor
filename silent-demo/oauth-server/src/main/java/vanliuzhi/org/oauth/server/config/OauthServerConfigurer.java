@@ -5,7 +5,6 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
-import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -51,13 +50,22 @@ public class OauthServerConfigurer extends AuthorizationServerConfigurerAdapter 
     @Autowired
     private RedisConnectionFactory redisConnectionFactory;
 
+    /**
+     * 将token转换成jwt
+     */
     @Autowired
     private JwtAccessTokenConverter jwtAccessTokenConverter;
 
+    /**
+     * token采用jwt存储
+     */
     @Autowired
     @Qualifier("jwtTokenStore")
     private TokenStore tokenStore;
 
+    /**
+     * token增强
+     */
     @Autowired
     private HxTokenEnhancer tokenEnhancer;
 
@@ -161,7 +169,8 @@ public class OauthServerConfigurer extends AuthorizationServerConfigurerAdapter 
         endpoints.tokenStore(tokenStore)
                 .authenticationManager(authenticationManager)
                 .userDetailsService(userDetailsService)
-                .tokenEnhancer(tokenEnhancerChain) // 配置增强
+                // 配置增强
+                .tokenEnhancer(tokenEnhancerChain)
                 .accessTokenConverter(jwtAccessTokenConverter);
 
         //配置使用jwt存储token
