@@ -1,0 +1,5 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+  vanliuzhi.org.auth.client.config.MyResourceServerConfig,\
+  vanliuzhi.org.auth.client.MyResourceServerAutoConfiguration,\
+  vanliuzhi.org.auth.client.MyFeignAutoConfiguration,\
+  vanliuzhi.org.auth.client.MyResourceServerTokenRelayAutoConfiguration
