@@ -3,12 +3,10 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.3.4.RELEASE</version>
-        <relativePath/> <!-- lookup parent from repository -->
+        <groupId>vanliuzhi.org</groupId>
+        <artifactId>custom-starter</artifactId>
+        <version>0.0.1-SNAPSHOT</version>
     </parent>
-    <groupId>vanliuzhi.org</groupId>
     <artifactId>auth-client-spring-boot-starter</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>auth-client-spring-boot-starter</name>
@@ -22,6 +20,12 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter</artifactId>
+        </dependency>
+
+        <!--导入spring cloud oauth2依赖-->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-oauth2</artifactId>
         </dependency>
 
         <dependency>
