@@ -1,0 +1,5 @@
+server:
+  port: 9998
+spring:
+  application:
+    name: cloud-test-server
