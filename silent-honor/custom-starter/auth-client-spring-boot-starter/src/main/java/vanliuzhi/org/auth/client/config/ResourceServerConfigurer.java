@@ -4,8 +4,12 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.jwt.crypto.sign.MacSigner;
 import org.springframework.security.oauth2.config.annotation.web.configuration.ResourceServerConfigurerAdapter;
 import org.springframework.security.oauth2.config.annotation.web.configurers.ResourceServerSecurityConfigurer;
+import org.springframework.security.oauth2.provider.token.DefaultAccessTokenConverter;
+import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
+import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
 import vanliuzhi.org.auth.client.properties.AuthClientProperties;
 
 /**
@@ -23,13 +27,37 @@ public class ResourceServerConfigurer extends ResourceServerConfigurerAdapter {
 
     @Override
     public void configure(ResourceServerSecurityConfigurer resources) throws Exception {
-        super.configure(resources);
+        // super.configure(resources);
         // 从配置文件读取设置资源服务器id
         if (authClientProperties.getResourceId() != null) {
             resources.resourceId(authClientProperties.getResourceId())
                     // 指明该资源只能基于令牌访问，默认true
                     .stateless(true);
         }
+        // 这里的签名key 保持和认证中心一致
+        if (authClientProperties.getSigningKey() == null) {
+            log.info("SigningKey is null cant not decode token.......");
+        }
+
+        // DefaultAccessTokenConverter accessTokenConverter = new DefaultAccessTokenConverter();
+        // accessTokenConverter.setUserTokenConverter(new MyUserAuthenticationConverter());
+        //
+        // JwtAccessTokenConverter converter = new JwtAccessTokenConverter();
+        // //设置解析jwt的密钥
+        // converter.setSigningKey(authClientProperties.getSigningKey());
+        // converter.setVerifier(new MacSigner(authClientProperties.getSigningKey()));
+        //
+        // MyTokenServices tokenServices = new MyTokenServices();
+        //
+        // // 在CustomTokenServices注入三个依赖对象
+        // //设置token存储策略
+        // tokenServices.setTokenStore(new JwtTokenStore(converter));
+        // tokenServices.setJwtAccessTokenConverter(converter);
+        // tokenServices.setDefaultAccessTokenConverter(accessTokenConverter);
+        // tokenServices.setRestTemplate(lbRestTemplate);
+        // resources.tokenServices(tokenServices)
+        //         .authenticationEntryPoint(baseAuthenticationEntryPoint);
+
     }
 
     /**
@@ -38,7 +66,7 @@ public class ResourceServerConfigurer extends ResourceServerConfigurerAdapter {
      */
     @Override
     public void configure(HttpSecurity http) throws Exception {
-        super.configure(http);
+        // super.configure(http);
         // 关闭csrf
         http.csrf().disable();
         // 放行 swagger ui 相关端点
@@ -60,4 +88,5 @@ public class ResourceServerConfigurer extends ResourceServerConfigurerAdapter {
         // 其他请求均需要token才能访问
         http.authorizeRequests().anyRequest().authenticated();
     }
+
 }

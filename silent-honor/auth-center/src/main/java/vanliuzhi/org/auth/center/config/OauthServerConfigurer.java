@@ -115,7 +115,7 @@ public class OauthServerConfigurer extends AuthorizationServerConfigurerAdapter 
                 // 配置access_token的过期时间
                 // .accessTokenValiditySeconds(1800)
                 // 配置资源id(每个资源服务器都有唯一id，该方法接受的参数也是多个String，可以配置该客户端能访问的资源)
-                .resourceIds("order-server")
+                .resourceIds("cloud-test-server")
                 // 客户端的权限范围，此处配置为all全部即可
                 .scopes("all")
                 // 123456加密后的密码(客户端secret)
@@ -128,13 +128,13 @@ public class OauthServerConfigurer extends AuthorizationServerConfigurerAdapter 
     @Override
     public void configure(AuthorizationServerEndpointsConfigurer endpoints) {
         endpoints
-                .tokenStore(tokenStore)
-                // .tokenServices(authorizationServerTokenServices())
+                // .tokenStore(tokenStore)
+                .tokenServices(authorizationServerTokenServices())
                 .authenticationManager(authenticationManager)
-                .userDetailsService(userDetailsService)
+                .userDetailsService(userDetailsService);
                 // // 配置增强
-                .tokenEnhancer(tokenEnhancerChain())
-                .accessTokenConverter(jwtAccessTokenConverter);
+                // .tokenEnhancer(tokenEnhancerChain())
+                // .accessTokenConverter(jwtAccessTokenConverter);
     }
 
     /**

@@ -3,3 +3,22 @@ server:
 spring:
   application:
     name: cloud-test-server
+
+custom:
+  oauth2:
+    client:
+      # jwt的密钥
+      signingKey: test_key
+      resourceId: ${spring.application.name}
+      # 放行的url
+      ignoreUrls:
+        - /oauth/**
+        - /user/**
+
+
+security:
+  oauth2:
+    client:
+      client-id: vanliuzhi
+      client-secret: 123456
+      access-token-uri: http://localhost:9999/oauth/token

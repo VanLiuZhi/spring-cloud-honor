@@ -14,15 +14,12 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.A
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableAuthorizationServer;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerEndpointsConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerSecurityConfigurer;
-import org.springframework.security.oauth2.provider.token.*;
+import org.springframework.security.oauth2.provider.token.AuthorizationServerTokenServices;
+import org.springframework.security.oauth2.provider.token.DefaultTokenServices;
+import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.security.oauth2.provider.token.store.InMemoryTokenStore;
 import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
-import org.springframework.security.oauth2.provider.token.store.redis.RedisTokenStore;
 import vanliuzhi.org.oauth.server.component.HxTokenEnhancer;
-// import vanliuzhi.org.oauth.server.component.HxTokenEnhancer;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * 授权服务器配置
@@ -79,10 +76,10 @@ public class OauthServerConfigurer extends AuthorizationServerConfigurerAdapter 
      * 3. RedisTokenStore Redis存储
      * 4. JwkTokenStore & JwtTokenStore
      */
-    // @Bean
-    // public TokenStore tokenStore() {
-    //     return new InMemoryTokenStore();
-    // }
+    @Bean
+    public TokenStore tokenStore() {
+        return new InMemoryTokenStore();
+    }
 
     /**
      * 指定密码的加密方式
@@ -171,32 +168,33 @@ public class OauthServerConfigurer extends AuthorizationServerConfigurerAdapter 
         //         .accessTokenConverter(jwtAccessTokenConverter);
 
         // 配置使用jwt存储token
-        endpoints.tokenStore(tokenStore)
+        endpoints.tokenStore(tokenStore())
                 .authenticationManager(authenticationManager)
-                .userDetailsService(userDetailsService)
-                .accessTokenConverter(jwtAccessTokenConverter);
+                .userDetailsService(userDetailsService);
+                // .accessTokenConverter(jwtAccessTokenConverter);
+
     }
 
     /**
      * 该⽅法⽤户获取⼀个token服务对象（该对象描述了token有效期等信息）
      */
-    // private AuthorizationServerTokenServices authorizationServerTokenServices() {
-    //
-    //     // 使⽤默认实现
-    //     DefaultTokenServices defaultTokenServices = new DefaultTokenServices();
-    //
-    //     // 是否开启令牌刷新
-    //     defaultTokenServices.setSupportRefreshToken(true);
-    //     // token以什么形式存储
-    //     defaultTokenServices.setTokenStore(tokenStore());
-    //     // access_token就是我们请求资源需要携带的令牌
-    //     defaultTokenServices.setAccessTokenValiditySeconds(30);
-    //     // 设置刷新令牌的有效时间 3天
-    //     defaultTokenServices.setRefreshTokenValiditySeconds(259200);
-    //
-    //     return defaultTokenServices;
-    //
-    // }
+    private AuthorizationServerTokenServices authorizationServerTokenServices() {
+
+        // 使⽤默认实现
+        DefaultTokenServices defaultTokenServices = new DefaultTokenServices();
+
+        // 是否开启令牌刷新
+        defaultTokenServices.setSupportRefreshToken(true);
+        // token以什么形式存储
+        defaultTokenServices.setTokenStore(tokenStore());
+        // access_token就是我们请求资源需要携带的令牌
+        defaultTokenServices.setAccessTokenValiditySeconds(30);
+        // 设置刷新令牌的有效时间 3天
+        defaultTokenServices.setRefreshTokenValiditySeconds(259200);
+
+        return defaultTokenServices;
+
+    }
 
 }
 

@@ -21,9 +21,7 @@ public class HxTokenEnhancer implements TokenEnhancer {
 
     @Override
     public OAuth2AccessToken enhance(OAuth2AccessToken accessToken, OAuth2Authentication authentication) {
-        /**
-         * 客户端模式不修改
-         */
+        // 客户端模式不修改
         if (CLIENT_CREDENTIALS.equals(authentication.getOAuth2Request().getGrantType())) {
             return accessToken;
         }

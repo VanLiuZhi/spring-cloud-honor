@@ -9,6 +9,12 @@
     <description>Demo project for Spring Boot</description>
     <packaging>pom</packaging>
 
+    <modules>
+        <module>test-server</module>
+        <module>custom-starter</module>
+        <module>auth-center</module>
+    </modules>
+
     <properties>
         <!-- 项目版本号 -->
         <revision>1.0.0-SNAPSHOT</revision>
@@ -49,6 +55,13 @@
 
     <dependencyManagement>
         <dependencies>
+            <!--授权服务，客户端配置-->
+            <dependency>
+                <groupId>vanliuzhi.org</groupId>
+                <artifactId>auth-client-spring-boot-starter</artifactId>
+                <version>0.0.1-SNAPSHOT</version>
+            </dependency>
+            <!--security-oauth2-->
             <dependency>
                 <groupId>org.springframework.security.oauth</groupId>
                 <artifactId>spring-security-oauth2</artifactId>
