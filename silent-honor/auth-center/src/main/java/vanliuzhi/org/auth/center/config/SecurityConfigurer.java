@@ -11,7 +11,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 /**
  * Security 配置
  *
- * @author Lys3415
+ * @author VanLiuZhi
  * @date 2020/9/28 15:15
  */
 @Configuration

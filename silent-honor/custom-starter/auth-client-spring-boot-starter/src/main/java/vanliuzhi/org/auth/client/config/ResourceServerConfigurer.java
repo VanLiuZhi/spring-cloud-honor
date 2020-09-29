@@ -11,7 +11,7 @@ import vanliuzhi.org.auth.client.properties.AuthClientProperties;
 /**
  * 资源服务器配置
  *
- * @author Lys3415
+ * @author VanLiuZhi
  * @date 2020/9/28 13:57
  */
 @Slf4j

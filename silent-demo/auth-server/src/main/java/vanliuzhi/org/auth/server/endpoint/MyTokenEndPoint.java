@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.security.Principal;
 
 /**
- * @author Lys3415
+ * @author VanLiuZhi
  * @date 2020/9/27 14:42
  */
 @Slf4j

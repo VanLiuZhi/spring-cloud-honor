@@ -9,7 +9,7 @@ import org.springframework.security.oauth2.config.annotation.web.configurers.Res
 /**
  * 资源服务器配置
  *
- * @author Lys3415
+ * @author VanLiuZhi
  * @date 2020/8/27 16:27
  */
 @Configuration

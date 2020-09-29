@@ -24,7 +24,7 @@ import java.util.List;
 /**
  * 授权服务器配置
  *
- * @author Lys3415
+ * @author VanLiuZhi
  * @date 2020/9/28 15:07
  */
 @Configuration
@@ -81,7 +81,7 @@ public class OauthServerConfigurer extends AuthorizationServerConfigurerAdapter 
      * 用来配置令牌端点(Token Endpoint)的安全约束
      * /oauth/check_token?token
      * 通过 get 请求带上token，可以去校验该token
-     *
+     * <p>
      * 其它 Endpoint
      * /oauth/authorize(授权端，授权码模式使用)
      * /oauth/token(令牌端，获取 token)
@@ -126,25 +126,14 @@ public class OauthServerConfigurer extends AuthorizationServerConfigurerAdapter 
      * 来配置授权（authorization）以及令牌（token）的访问端点和令牌服务(token services)
      */
     @Override
-    public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
-
-        // TokenEnhancerChain tokenEnhancerChain = new TokenEnhancerChain();
-        // List<TokenEnhancer> enhancerList = new ArrayList<>();
-        // enhancerList.add(jwtAccessTokenConverter);
-        // enhancerList.add(tokenEnhancer);
-        // tokenEnhancerChain.setTokenEnhancers(enhancerList);
-
-        // endpoints.tokenStore(tokenStore)
-        //         .authenticationManager(authenticationManager)
-        //         .userDetailsService(userDetailsService)
-        //         // 配置增强
-        //         .tokenEnhancer(tokenEnhancerChain)
-        //         .accessTokenConverter(jwtAccessTokenConverter);
-
+    public void configure(AuthorizationServerEndpointsConfigurer endpoints) {
         endpoints
-                .tokenServices(authorizationServerTokenServices())
+                .tokenStore(tokenStore)
+                // .tokenServices(authorizationServerTokenServices())
                 .authenticationManager(authenticationManager)
                 .userDetailsService(userDetailsService)
+                // // 配置增强
+                .tokenEnhancer(tokenEnhancerChain())
                 .accessTokenConverter(jwtAccessTokenConverter);
     }
 
@@ -166,5 +155,14 @@ public class OauthServerConfigurer extends AuthorizationServerConfigurerAdapter 
 
         return defaultTokenServices;
 
+    }
+
+    private TokenEnhancerChain tokenEnhancerChain() {
+        TokenEnhancerChain tokenEnhancerChain = new TokenEnhancerChain();
+        List<TokenEnhancer> enhancerList = new ArrayList<>();
+        enhancerList.add(jwtAccessTokenConverter);
+        enhancerList.add(tokenEnhancer);
+        tokenEnhancerChain.setTokenEnhancers(enhancerList);
+        return tokenEnhancerChain;
     }
 }

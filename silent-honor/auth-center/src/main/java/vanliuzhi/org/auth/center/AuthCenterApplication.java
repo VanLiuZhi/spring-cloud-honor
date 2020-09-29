@@ -5,7 +5,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableAuthorizationServer;
 
 /**
- * @author lys3415
+ * @author VanLiuZhi
  */
 @SpringBootApplication
 @EnableAuthorizationServer

@@ -9,7 +9,7 @@ import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
 /**
  * JWT存储配置
  *
- * @author Lys3415
+ * @author VanLiuZhi
  * @date 2020/9/28 15:30
  */
 @Configuration

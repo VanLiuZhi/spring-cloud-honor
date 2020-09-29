@@ -16,7 +16,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * @author Lys3415
+ * @author VanLiuZhi
  * @date 2020/9/29 11:28
  */
 @Controller
@@ -26,12 +26,12 @@ public class MappingsController {
     private RequestMappingHandlerMapping requestMappingHandlerMapping;
 
     @RequestMapping(value = "/mappings")
-    public String list(Model model) {
+    public List<HashMap<String, String>> list(Model model) {
         List<HashMap<String, String>> urlList = new ArrayList<>();
 
         Map<RequestMappingInfo, HandlerMethod> map = requestMappingHandlerMapping.getHandlerMethods();
         for (Map.Entry<RequestMappingInfo, HandlerMethod> m : map.entrySet()) {
-            HashMap<String, String> hashMap = new HashMap<String, String>();
+            HashMap<String, String> hashMap = new HashMap<>(8);
             RequestMappingInfo info = m.getKey();
             HandlerMethod method = m.getValue();
             PatternsRequestCondition p = info.getPatternsCondition();
@@ -52,6 +52,6 @@ public class MappingsController {
             urlList.add(hashMap);
         }
         model.addAttribute("list", urlList);
-        return "/console/system/mappingList";
+        return urlList;
     }
 }

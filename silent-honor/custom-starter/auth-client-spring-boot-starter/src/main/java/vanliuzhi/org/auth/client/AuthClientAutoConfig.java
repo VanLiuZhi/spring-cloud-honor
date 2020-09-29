@@ -11,7 +11,7 @@ import vanliuzhi.org.auth.client.config.ResourceServerConfigurer;
 import vanliuzhi.org.auth.client.properties.AuthClientProperties;
 
 /**
- * @author Lys3415
+ * @author VanLiuZhi
  * @date 2020/9/28 14:00
  */
 @EnableResourceServer

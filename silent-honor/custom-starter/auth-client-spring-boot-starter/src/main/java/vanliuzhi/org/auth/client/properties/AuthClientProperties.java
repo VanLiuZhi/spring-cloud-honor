@@ -9,7 +9,7 @@ import java.util.List;
 /**
  * 资源服务器配置属性
  *
- * @author Lys3415
+ * @author VanLiuZhi
  * @date 2020/9/28 14:10
  */
 @Data

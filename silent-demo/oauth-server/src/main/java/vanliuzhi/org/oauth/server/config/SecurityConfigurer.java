@@ -11,7 +11,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 /**
  * security 配置
  *
- * @author lys3415
+ * @author VanLiuZhi
  */
 @Configuration
 public class SecurityConfigurer extends WebSecurityConfigurerAdapter {
