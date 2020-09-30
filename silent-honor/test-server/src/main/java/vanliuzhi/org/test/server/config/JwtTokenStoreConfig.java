@@ -1,4 +1,4 @@
-package vanliuzhi.org.auth.center.config;
+package vanliuzhi.org.test.server.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

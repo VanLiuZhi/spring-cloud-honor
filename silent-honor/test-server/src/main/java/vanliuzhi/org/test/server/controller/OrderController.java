@@ -15,7 +15,7 @@ public class OrderController {
 
     @GetMapping("test")
     public String test() {
-        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getDetails();
         log.info(principal.toString());
         return principal.toString();
     }

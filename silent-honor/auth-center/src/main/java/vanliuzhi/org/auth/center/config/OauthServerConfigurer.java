@@ -14,6 +14,7 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.A
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerEndpointsConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerSecurityConfigurer;
 import org.springframework.security.oauth2.provider.token.*;
+import org.springframework.security.oauth2.provider.token.store.InMemoryTokenStore;
 import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
 import org.springframework.security.oauth2.provider.token.store.redis.RedisTokenStore;
 import vanliuzhi.org.auth.center.component.HxTokenEnhancer;
@@ -66,6 +67,11 @@ public class OauthServerConfigurer extends AuthorizationServerConfigurerAdapter 
      */
     @Autowired
     private RedisConnectionFactory redisConnectionFactory;
+
+    @Bean
+    public TokenStore inMemory() {
+        return new InMemoryTokenStore();
+    }
 
     /**
      * 指定密码的加密方式
@@ -128,13 +134,13 @@ public class OauthServerConfigurer extends AuthorizationServerConfigurerAdapter 
     @Override
     public void configure(AuthorizationServerEndpointsConfigurer endpoints) {
         endpoints
-                // .tokenStore(tokenStore)
-                .tokenServices(authorizationServerTokenServices())
+                .tokenStore(tokenStore)
+                // .tokenServices(authorizationServerTokenServices())
                 .authenticationManager(authenticationManager)
-                .userDetailsService(userDetailsService);
+                .userDetailsService(userDetailsService)
                 // // 配置增强
-                // .tokenEnhancer(tokenEnhancerChain())
-                // .accessTokenConverter(jwtAccessTokenConverter);
+                .tokenEnhancer(tokenEnhancerChain())
+                .accessTokenConverter(jwtAccessTokenConverter);
     }
 
     /**
@@ -147,11 +153,11 @@ public class OauthServerConfigurer extends AuthorizationServerConfigurerAdapter 
         // 是否开启令牌刷新
         defaultTokenServices.setSupportRefreshToken(true);
         // token以什么形式存储
-        defaultTokenServices.setTokenStore(new RedisTokenStore(redisConnectionFactory));
-        // access_token就是我们请求资源需要携带的令牌
-        defaultTokenServices.setAccessTokenValiditySeconds(30);
+        defaultTokenServices.setTokenStore(inMemory());
+        // 设置令牌的有效时间 30 秒
+        defaultTokenServices.setAccessTokenValiditySeconds(60 * 3);
         // 设置刷新令牌的有效时间 3天
-        defaultTokenServices.setRefreshTokenValiditySeconds(259200);
+        defaultTokenServices.setRefreshTokenValiditySeconds(60 * 60 * 24 *3);
 
         return defaultTokenServices;
 

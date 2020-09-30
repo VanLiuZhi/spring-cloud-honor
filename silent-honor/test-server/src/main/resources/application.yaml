@@ -3,6 +3,13 @@ server:
 spring:
   application:
     name: cloud-test-server
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+  redis:
+    database: 0
+    port: 6377
+    host: 10.90.15.35
+    password: qweEX123
 
 custom:
   oauth2:
@@ -15,10 +22,6 @@ custom:
         - /oauth/**
         - /user/**
 
-
-security:
-  oauth2:
-    client:
-      client-id: vanliuzhi
-      client-secret: 123456
-      access-token-uri: http://localhost:9999/oauth/token
+#logging:
+#  level:
+#    org.springframework: DEBUG

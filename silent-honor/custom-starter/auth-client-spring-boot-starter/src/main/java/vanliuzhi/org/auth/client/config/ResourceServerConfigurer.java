@@ -3,13 +3,11 @@ package vanliuzhi.org.auth.client.config;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.jwt.crypto.sign.MacSigner;
 import org.springframework.security.oauth2.config.annotation.web.configuration.ResourceServerConfigurerAdapter;
 import org.springframework.security.oauth2.config.annotation.web.configurers.ResourceServerSecurityConfigurer;
-import org.springframework.security.oauth2.provider.token.DefaultAccessTokenConverter;
-import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
-import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
+import org.springframework.security.oauth2.provider.token.store.redis.RedisTokenStore;
 import vanliuzhi.org.auth.client.properties.AuthClientProperties;
 
 /**
@@ -25,10 +23,13 @@ public class ResourceServerConfigurer extends ResourceServerConfigurerAdapter {
     @Autowired
     private AuthClientProperties authClientProperties;
 
+    @Autowired
+    private RedisConnectionFactory redisConnectionFactory;
+
     @Override
     public void configure(ResourceServerSecurityConfigurer resources) throws Exception {
-        // super.configure(resources);
         // 从配置文件读取设置资源服务器id
+        System.out.println(authClientProperties.getResourceId());
         if (authClientProperties.getResourceId() != null) {
             resources.resourceId(authClientProperties.getResourceId())
                     // 指明该资源只能基于令牌访问，默认true
@@ -38,6 +39,8 @@ public class ResourceServerConfigurer extends ResourceServerConfigurerAdapter {
         if (authClientProperties.getSigningKey() == null) {
             log.info("SigningKey is null cant not decode token.......");
         }
+
+        // resources.tokenStore(new RedisTokenStore(redisConnectionFactory));
 
         // DefaultAccessTokenConverter accessTokenConverter = new DefaultAccessTokenConverter();
         // accessTokenConverter.setUserTokenConverter(new MyUserAuthenticationConverter());
@@ -66,7 +69,7 @@ public class ResourceServerConfigurer extends ResourceServerConfigurerAdapter {
      */
     @Override
     public void configure(HttpSecurity http) throws Exception {
-        // super.configure(http);
+        super.configure(http);
         // 关闭csrf
         http.csrf().disable();
         // 放行 swagger ui 相关端点
@@ -86,7 +89,11 @@ public class ResourceServerConfigurer extends ResourceServerConfigurerAdapter {
             }
         }
         // 其他请求均需要token才能访问
-        http.authorizeRequests().anyRequest().authenticated();
+        http.authorizeRequests()
+                .antMatchers("/test").hasRole("user")
+                .antMatchers("/user/**").hasRole("admin")
+                .anyRequest().authenticated();
+        // http.authorizeRequests().anyRequest().authenticated();
     }
 
 }
