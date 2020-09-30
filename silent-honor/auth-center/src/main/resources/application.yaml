@@ -11,6 +11,16 @@ spring:
     port: 6377
     host: 10.90.15.35
     password: qweEX123
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://10.90.15.35:3306/test_oauth2?useUnicode=true&characterEncoding=utf-8&useSSL=false&allowMultiQueries=true
+    username: root
+    password: root123456
+    druid:
+      initialSize: 10
+      minIdle: 10
+      maxActive: 30
+      maxWait: 50000
 management:
   endpoints:
     web:
