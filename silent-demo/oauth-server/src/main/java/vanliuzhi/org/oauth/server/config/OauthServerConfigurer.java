@@ -19,6 +19,7 @@ import org.springframework.security.oauth2.provider.token.DefaultTokenServices;
 import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.security.oauth2.provider.token.store.InMemoryTokenStore;
 import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
+import org.springframework.security.oauth2.provider.token.store.redis.RedisTokenStore;
 import vanliuzhi.org.oauth.server.component.HxTokenEnhancer;
 
 /**
@@ -168,7 +169,7 @@ public class OauthServerConfigurer extends AuthorizationServerConfigurerAdapter 
         //         .accessTokenConverter(jwtAccessTokenConverter);
 
         // 配置使用jwt存储token
-        endpoints.tokenStore(tokenStore())
+        endpoints.tokenStore(new RedisTokenStore(redisConnectionFactory))
                 .authenticationManager(authenticationManager)
                 .userDetailsService(userDetailsService);
                 // .accessTokenConverter(jwtAccessTokenConverter);
@@ -182,7 +183,6 @@ public class OauthServerConfigurer extends AuthorizationServerConfigurerAdapter 
 
         // 使⽤默认实现
         DefaultTokenServices defaultTokenServices = new DefaultTokenServices();
-
         // 是否开启令牌刷新
         defaultTokenServices.setSupportRefreshToken(true);
         // token以什么形式存储

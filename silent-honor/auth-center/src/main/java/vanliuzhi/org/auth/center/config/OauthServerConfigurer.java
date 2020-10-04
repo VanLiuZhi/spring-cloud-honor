@@ -13,11 +13,13 @@ import org.springframework.security.oauth2.config.annotation.configurers.ClientD
 import org.springframework.security.oauth2.config.annotation.web.configuration.AuthorizationServerConfigurerAdapter;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerEndpointsConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerSecurityConfigurer;
+import org.springframework.security.oauth2.provider.client.JdbcClientDetailsService;
 import org.springframework.security.oauth2.provider.token.*;
+import org.springframework.security.oauth2.provider.token.store.InMemoryTokenStore;
 import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
-import org.springframework.security.oauth2.provider.token.store.redis.RedisTokenStore;
 import vanliuzhi.org.auth.center.component.HxTokenEnhancer;
 
+import javax.sql.DataSource;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -68,6 +70,17 @@ public class OauthServerConfigurer extends AuthorizationServerConfigurerAdapter 
     private RedisConnectionFactory redisConnectionFactory;
 
     /**
+     * 数据源
+     */
+    @Autowired
+    private DataSource dataSource;
+
+    @Bean
+    public TokenStore inMemory() {
+        return new InMemoryTokenStore();
+    }
+
+    /**
      * 指定密码的加密方式
      * 推荐使用 BCryptPasswordEncoder, Pbkdf2PasswordEncoder, SCryptPasswordEncoder
      */
@@ -107,19 +120,25 @@ public class OauthServerConfigurer extends AuthorizationServerConfigurerAdapter 
     @Override
     public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
         // 这里显示配置，客户端是固定的，实际情况最好通过数据库获取客户端信息，方便扩展
-        clients.inMemory()
-                // 配置客户端id
-                .withClient("vanliuzhi")
-                // 授权模式为password和refresh_token两种
-                .authorizedGrantTypes("password", "refresh_token")
-                // 配置access_token的过期时间
-                // .accessTokenValiditySeconds(1800)
-                // 配置资源id(每个资源服务器都有唯一id，该方法接受的参数也是多个String，可以配置该客户端能访问的资源)
-                .resourceIds("cloud-test-server")
-                // 客户端的权限范围，此处配置为all全部即可
-                .scopes("all")
-                // 123456加密后的密码(客户端secret)
-                .secret("$2a$10$tnj.nZjSzCBckTh2fRRK9.ZTYfU0y4pDiZZChKxxeOElBsxaQCn26");
+        // clients.inMemory()
+        //         // 配置客户端id
+        //         .withClient("vanliuzhi")
+        //         // 授权模式为password和refresh_token两种
+        //         .authorizedGrantTypes("password", "refresh_token")
+        //         // 配置access_token的过期时间
+        //         // .accessTokenValiditySeconds(1800)
+        //         // 配置资源id(每个资源服务器都有唯一id，该方法接受的参数也是多个String，可以配置该客户端能访问的资源)
+        //         .resourceIds("cloud-test-server")
+        //         // 客户端的权限范围，此处配置为all全部即可
+        //         .scopes("all")
+        //         // 123456加密后的密码(客户端secret)
+        //         .secret("$2a$10$tnj.nZjSzCBckTh2fRRK9.ZTYfU0y4pDiZZChKxxeOElBsxaQCn26");
+        clients.withClientDetails(createJdbcClientDetailsService());
+    }
+
+    @Bean
+    public JdbcClientDetailsService createJdbcClientDetailsService() {
+        return new JdbcClientDetailsService(dataSource);
     }
 
     /**
@@ -128,13 +147,13 @@ public class OauthServerConfigurer extends AuthorizationServerConfigurerAdapter 
     @Override
     public void configure(AuthorizationServerEndpointsConfigurer endpoints) {
         endpoints
-                // .tokenStore(tokenStore)
-                .tokenServices(authorizationServerTokenServices())
+                .tokenStore(tokenStore)
+                // .tokenServices(authorizationServerTokenServices())
                 .authenticationManager(authenticationManager)
-                .userDetailsService(userDetailsService);
+                .userDetailsService(userDetailsService)
                 // // 配置增强
-                // .tokenEnhancer(tokenEnhancerChain())
-                // .accessTokenConverter(jwtAccessTokenConverter);
+                .tokenEnhancer(tokenEnhancerChain())
+                .accessTokenConverter(jwtAccessTokenConverter);
     }
 
     /**
@@ -147,11 +166,11 @@ public class OauthServerConfigurer extends AuthorizationServerConfigurerAdapter 
         // 是否开启令牌刷新
         defaultTokenServices.setSupportRefreshToken(true);
         // token以什么形式存储
-        defaultTokenServices.setTokenStore(new RedisTokenStore(redisConnectionFactory));
-        // access_token就是我们请求资源需要携带的令牌
-        defaultTokenServices.setAccessTokenValiditySeconds(30);
+        defaultTokenServices.setTokenStore(inMemory());
+        // 设置令牌的有效时间 30 秒
+        defaultTokenServices.setAccessTokenValiditySeconds(60 * 3);
         // 设置刷新令牌的有效时间 3天
-        defaultTokenServices.setRefreshTokenValiditySeconds(259200);
+        defaultTokenServices.setRefreshTokenValiditySeconds(60 * 60 * 24 * 3);
 
         return defaultTokenServices;
 

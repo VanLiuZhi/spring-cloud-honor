@@ -23,9 +23,20 @@
         </dependency>
 
         <!--授权服务，客户端配置-->
+        <!--<dependency>-->
+        <!--    <groupId>vanliuzhi.org</groupId>-->
+        <!--    <artifactId>auth-client-spring-boot-starter</artifactId>-->
+        <!--</dependency>-->
+
         <dependency>
-            <groupId>vanliuzhi.org</groupId>
-            <artifactId>auth-client-spring-boot-starter</artifactId>
+            <groupId>org.springframework.security.oauth</groupId>
+            <artifactId>spring-security-oauth2</artifactId>
+        </dependency>
+
+        <!-- jwt 使用jwt需要加入相关依赖，security-oauth2只提供接口不提供实现，也可用第三方实现 -->
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-jwt</artifactId>
         </dependency>
 
         <dependency>

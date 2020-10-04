@@ -1,4 +1,4 @@
-package vanliuzhi.org.auth.center.config;
+package vanliuzhi.org.test.server.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -7,7 +7,7 @@ import org.springframework.security.jwt.crypto.sign.MacSigner;
 import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
 import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
-import vanliuzhi.org.auth.center.component.LagouAccessTokenConvertor;
+import vanliuzhi.org.test.server.component.LagouAccessTokenConvertor;
 
 /**
  * JWT存储配置
