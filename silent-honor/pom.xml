@@ -43,6 +43,8 @@
         <!--由于和redis兼容问题，必须使用2.3.3以上版本-->
         <security-oauth2.version>2.3.6.RELEASE</security-oauth2.version>
         <spring-security.version>5.1.1.RELEASE</spring-security.version>
+        <druid.version>1.1.14</druid.version>
+        <mybatis-plus.version>3.3.2</mybatis-plus.version>
     </properties>
 
     <dependencies>
@@ -61,17 +63,12 @@
                 <artifactId>auth-client-spring-boot-starter</artifactId>
                 <version>0.0.1-SNAPSHOT</version>
             </dependency>
+
             <!--security-oauth2-->
             <dependency>
                 <groupId>org.springframework.security.oauth</groupId>
                 <artifactId>spring-security-oauth2</artifactId>
                 <version>${security-oauth2.version}</version>
-            </dependency>
-            <!--数据库连接池-->
-            <dependency>
-                <groupId>com.alibaba</groupId>
-                <artifactId>druid-spring-boot-starter</artifactId>
-                <version>1.1.21</version>
             </dependency>
             <!--spring-boot dependencies-->
             <dependency>
@@ -105,6 +102,50 @@
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
+
+            <!--&lt;!&ndash; mysql驱动 &ndash;&gt;-->
+            <!--<dependency>-->
+            <!--    <groupId>mysql</groupId>-->
+            <!--    <artifactId>mysql-connector-java</artifactId>-->
+            <!--</dependency>-->
+
+            <!--数据库连接池-->
+            <dependency>
+                <groupId>com.alibaba</groupId>
+                <artifactId>druid-spring-boot-starter</artifactId>
+                <version>${druid.version}</version>
+            </dependency>
+
+            <!-- mybatis-plus -->
+            <dependency>
+                <groupId>com.baomidou</groupId>
+                <artifactId>mybatis-plus-boot-starter</artifactId>
+                <version>${mybatis-plus.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.baomidou</groupId>
+                <artifactId>mybatis-plus</artifactId>
+                <version>${mybatis-plus.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.baomidou</groupId>
+                <artifactId>mybatis-plus-generator</artifactId>
+                <version>${mybatis-plus.version}</version>
+            </dependency>
+
+            <!-- mybatis的分页插件 -->
+            <dependency>
+                <groupId>com.github.pagehelper</groupId>
+                <artifactId>pagehelper-spring-boot-starter</artifactId>
+                <version>1.2.13</version>
+            </dependency>
+
+            <dependency>
+                <groupId>p6spy</groupId>
+                <artifactId>p6spy</artifactId>
+                <version>3.8.7</version>
+            </dependency>
+
         </dependencies>
     </dependencyManagement>
 

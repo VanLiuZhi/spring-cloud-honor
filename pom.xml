@@ -20,11 +20,7 @@
         <module>oauth2-jwt</module>
         <module>oauth2-client</module>
         <module>oauth2-client2</module>
-        <module>custom-spring-boot-starter</module>
-        <module>common-module</module>
         <module>register-center</module>
-        <module>api-gateway</module>
-        <module>user-center</module>
         <!--<module>auth-center</module>-->
         <module>demo</module>
     </modules>
@@ -132,24 +128,24 @@
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
-            <!--数据库starter-->
-            <dependency>
-                <groupId>com.vanliuzhi.org</groupId>
-                <artifactId>custom-db-spring-boot-starter</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-            <!--缓存starter-->
-            <dependency>
-                <groupId>com.vanliuzhi.org</groupId>
-                <artifactId>custom-redis-spring-boot-starter</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-            <!--公共模块依赖-->
-            <dependency>
-                <groupId>com.vanliuzhi.org</groupId>
-                <artifactId>common-module</artifactId>
-                <version>${project.version}</version>
-            </dependency>
+            <!--&lt;!&ndash;数据库starter&ndash;&gt;-->
+            <!--<dependency>-->
+            <!--    <groupId>com.vanliuzhi.org</groupId>-->
+            <!--    <artifactId>custom-db-spring-boot-starter</artifactId>-->
+            <!--    <version>${project.version}</version>-->
+            <!--</dependency>-->
+            <!--&lt;!&ndash;缓存starter&ndash;&gt;-->
+            <!--<dependency>-->
+            <!--    <groupId>com.vanliuzhi.org</groupId>-->
+            <!--    <artifactId>custom-redis-spring-boot-starter</artifactId>-->
+            <!--    <version>${project.version}</version>-->
+            <!--</dependency>-->
+            <!--&lt;!&ndash;公共模块依赖&ndash;&gt;-->
+            <!--<dependency>-->
+            <!--    <groupId>com.vanliuzhi.org</groupId>-->
+            <!--    <artifactId>common-module</artifactId>-->
+            <!--    <version>${project.version}</version>-->
+            <!--</dependency>-->
             <!--<dependency>-->
             <!--    <groupId>org.springframework.security.oauth</groupId>-->
             <!--    <artifactId>spring-security-oauth2</artifactId>-->
