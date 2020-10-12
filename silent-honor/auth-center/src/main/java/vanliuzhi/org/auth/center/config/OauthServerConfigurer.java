@@ -152,8 +152,8 @@ public class OauthServerConfigurer extends AuthorizationServerConfigurerAdapter 
                 .authenticationManager(authenticationManager)
                 .userDetailsService(userDetailsService)
                 // // 配置增强
-                .tokenEnhancer(tokenEnhancerChain())
-                .accessTokenConverter(jwtAccessTokenConverter);
+                .tokenEnhancer(tokenEnhancerChain());
+                // .accessTokenConverter(jwtAccessTokenConverter);
     }
 
     /**

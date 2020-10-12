@@ -12,7 +12,7 @@ spring:
     host: 10.90.15.35
     password: qweEX123
   datasource:
-    driver-class-name: com.mysql.jdbc.Driver
+    driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://10.90.15.35:3306/test_oauth2?useUnicode=true&characterEncoding=utf-8&useSSL=false&allowMultiQueries=true
     username: root
     password: root123456

@@ -37,7 +37,7 @@ public class JwtTokenStoreConfig {
         // 验证时使⽤的密钥，和签名密钥保持⼀致
         accessTokenConverter.setVerifier(new MacSigner(SIGN_KEY));
 
-        accessTokenConverter.setAccessTokenConverter(lagouAccessTokenConvertor);
+        // accessTokenConverter.setAccessTokenConverter(lagouAccessTokenConvertor);
 
         return accessTokenConverter;
     }
