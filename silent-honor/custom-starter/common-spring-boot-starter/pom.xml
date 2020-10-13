@@ -7,9 +7,9 @@
         <artifactId>custom-starter</artifactId>
         <version>0.0.1-SNAPSHOT</version>
     </parent>
-    <artifactId>common-starter</artifactId>
+    <artifactId>common-spring-boot-starter</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>common-starter</name>
+    <name>common-spring-boot-starter</name>
     <description>Demo project for Spring Boot</description>
 
     <properties>
@@ -17,12 +17,12 @@
     </properties>
 
     <dependencies>
-        <!-- spring-security-core-->
+        <!-- spring security core-->
         <dependency>
             <groupId>org.springframework.security</groupId>
             <artifactId>spring-security-core</artifactId>
         </dependency>
-        <!-- spring security spring oauth2-->
+        <!-- spring security oauth2-->
         <dependency>
             <groupId>org.springframework.security.oauth</groupId>
             <artifactId>spring-security-oauth2</artifactId>
@@ -47,6 +47,17 @@
             <artifactId>mybatis-plus-generator</artifactId>
         </dependency>
 
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+        </dependency>
+
+        <!-- servlet -->
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>javax.servlet-api</artifactId>
+            <scope>provided</scope>
+        </dependency>
 
         <dependency>
             <groupId>org.springframework.boot</groupId>

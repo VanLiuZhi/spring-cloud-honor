@@ -61,7 +61,11 @@
             <dependency>
                 <groupId>vanliuzhi.org</groupId>
                 <artifactId>auth-client-spring-boot-starter</artifactId>
-                <version>0.0.1-SNAPSHOT</version>
+            </dependency>
+
+            <dependency>
+                <groupId>vanliuzhi.org</groupId>
+                <artifactId>common-spring-boot-starter</artifactId>
             </dependency>
 
             <!--security-oauth2-->
@@ -102,12 +106,6 @@
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
-
-            <!--&lt;!&ndash; mysql驱动 &ndash;&gt;-->
-            <!--<dependency>-->
-            <!--    <groupId>mysql</groupId>-->
-            <!--    <artifactId>mysql-connector-java</artifactId>-->
-            <!--</dependency>-->
 
             <!--数据库连接池-->
             <dependency>
