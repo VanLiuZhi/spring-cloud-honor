@@ -5,7 +5,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.AutoConfigureAfter;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Import;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableResourceServer;
@@ -17,7 +16,6 @@ import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import vanliuzhi.org.auth.client.authorize.AuthorizeConfigManager;
-import vanliuzhi.org.auth.client.config.ResourceServerConfigurer;
 import vanliuzhi.org.common.starter.auth.props.PermitUrlProperties;
 
 import javax.annotation.Resource;
@@ -29,7 +27,6 @@ import javax.annotation.Resource;
 @EnableResourceServer
 @Configuration
 @AutoConfigureAfter(TokenStore.class)
-@Import({ResourceServerConfigurer.class})
 @EnableConfigurationProperties(PermitUrlProperties.class)
 public class AuthClientAutoConfig extends ResourceServerConfigurerAdapter {
 
