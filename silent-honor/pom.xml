@@ -61,11 +61,14 @@
             <dependency>
                 <groupId>vanliuzhi.org</groupId>
                 <artifactId>auth-client-spring-boot-starter</artifactId>
+                <version>0.0.1-SNAPSHOT</version>
             </dependency>
 
+            <!--公共依赖-->
             <dependency>
                 <groupId>vanliuzhi.org</groupId>
                 <artifactId>common-spring-boot-starter</artifactId>
+                <version>0.0.1-SNAPSHOT</version>
             </dependency>
 
             <!--security-oauth2-->
