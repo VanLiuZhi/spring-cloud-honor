@@ -5,12 +5,8 @@ import org.springframework.security.config.annotation.web.configurers.Expression
 
 /**
  * @author Lys3415
- * @date 2020/10/14 14:11
+ * @date 2020/10/14 14:13
  */
-public interface AuthorizeConfigManager {
-    /**
-     *
-     * @param config
-     */
-    void config(ExpressionUrlAuthorizationConfigurer<HttpSecurity>.ExpressionInterceptUrlRegistry config);
+public interface AuthorizeConfigProvider {
+    boolean config(ExpressionUrlAuthorizationConfigurer<HttpSecurity>.ExpressionInterceptUrlRegistry config);
 }

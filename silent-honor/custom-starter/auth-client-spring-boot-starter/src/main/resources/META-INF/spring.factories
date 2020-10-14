@@ -1,2 +1,7 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-  vanliuzhi.org.auth.client.AuthClientAutoConfig
+  vanliuzhi.org.auth.client.AuthClientAutoConfig, \
+  vanliuzhi.org.auth.client.authorize.AuthAuthorizeConfigProvider, \
+  vanliuzhi.org.auth.client.authorize.OpenAuthorizeConfigManager, \
+  vanliuzhi.org.auth.client.config.ExceptionHandlerAdvice, \
+  vanliuzhi.org.auth.client.config.SecurityHandlerConfig, \
+  vanliuzhi.org.auth.client.config.TokenStoreConfig

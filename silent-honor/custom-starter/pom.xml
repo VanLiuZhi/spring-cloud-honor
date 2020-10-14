@@ -15,6 +15,7 @@
 
     <modules>
         <module>auth-client-spring-boot-starter</module>
+        <module>auth-service-spring-boot-starter</module>
         <module>common-spring-boot-starter</module>
     </modules>
 
