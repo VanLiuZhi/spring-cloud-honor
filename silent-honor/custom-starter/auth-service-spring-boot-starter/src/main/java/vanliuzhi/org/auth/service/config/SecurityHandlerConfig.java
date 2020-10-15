@@ -128,6 +128,11 @@ public class SecurityHandlerConfig {
             }
         };
     }
+
+    /**
+     * 向容器注入 oAuth2WebSecurityExpressionHandler 处理Bean
+     * 需要我们手动设置 applicationContext，所以这里传入
+     */
     @Bean
     public OAuth2WebSecurityExpressionHandler oAuth2WebSecurityExpressionHandler(ApplicationContext applicationContext) {
         OAuth2WebSecurityExpressionHandler expressionHandler = new OAuth2WebSecurityExpressionHandler();
@@ -135,6 +140,9 @@ public class SecurityHandlerConfig {
         return expressionHandler;
     }
 
+    /**
+     * 向容器注入 OauthLogoutHandler 处理Bean
+     */
     @Bean
     public OauthLogoutHandler oauthLogoutHandler() {
         return new OauthLogoutHandler();

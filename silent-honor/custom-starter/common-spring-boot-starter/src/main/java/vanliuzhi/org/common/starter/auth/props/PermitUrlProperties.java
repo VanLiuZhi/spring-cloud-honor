@@ -1,15 +1,17 @@
 package vanliuzhi.org.common.starter.auth.props;
 
-import org.apache.commons.lang3.ArrayUtils;
 import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.apache.commons.lang3.ArrayUtils;
 
+import java.util.ArrayList;
+import java.util.List;
 
 /**
- * @author lys3415
+ * @author VanLiuZhi
+ * @date 2020/10/12 22:05
  */
 @ConfigurationProperties(prefix = "security.oauth2")
 public class PermitUrlProperties {
-
     /**
      * 监控中心和swagger需要访问的url
      */
@@ -28,6 +30,9 @@ public class PermitUrlProperties {
             "/**/druid/**", "/**/favicon.ico", "/**/prometheus"
     };
 
+    /**
+     * 从配置文件读取
+     */
     private String[] ignored;
 
     /**
@@ -39,11 +44,10 @@ public class PermitUrlProperties {
         if (ignored == null || ignored.length == 0) {
             return ENDPOINTS;
         }
-        return ArrayUtils.addAll(ignored, ENDPOINTS);
+        return ArrayUtils.addAll(ENDPOINTS, ignored);
     }
 
     public void setIgnored(String[] ignored) {
         this.ignored = ignored;
     }
-
 }
