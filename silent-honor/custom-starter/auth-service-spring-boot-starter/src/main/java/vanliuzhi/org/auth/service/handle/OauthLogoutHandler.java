@@ -56,7 +56,9 @@ public class OauthLogoutHandler implements LogoutHandler {
         String token = extractHeaderToken(request);
         if (token == null) {
             log.debug("Token not found in headers. Trying request parameters.");
-            // token没有在请求头中，去请求url中获取
+            // token没有在请求头中，去请求参数中获取（该方法会从url参数或者表单中获取）
+            // For HTTP servlets, parameters
+            // are contained in the query string or posted form data.
             token = request.getParameter(OAuth2AccessToken.ACCESS_TOKEN);
             if (token == null) {
                 log.debug("Token not found in request parameters.  Not an OAuth2 request.");
