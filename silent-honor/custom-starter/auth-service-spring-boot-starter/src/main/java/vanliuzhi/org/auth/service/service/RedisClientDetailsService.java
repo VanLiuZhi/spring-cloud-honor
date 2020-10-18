@@ -1,11 +1,16 @@
 package vanliuzhi.org.auth.service.service;
 
+import com.alibaba.fastjson.JSONObject;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.oauth2.common.exceptions.InvalidClientException;
 import org.springframework.security.oauth2.provider.ClientDetails;
+import org.springframework.security.oauth2.provider.NoSuchClientException;
+import org.springframework.security.oauth2.provider.client.BaseClientDetails;
 import org.springframework.security.oauth2.provider.client.JdbcClientDetailsService;
 import vanliuzhi.org.common.starter.constant.AuthConstant;
 import vanliuzhi.org.common.starter.utils.CommonStringUtil;
@@ -54,25 +59,51 @@ public class RedisClientDetailsService extends JdbcClientDetailsService {
         this.redisTemplate = redisTemplate;
     }
 
+    /**
+     * 核心方法，通过客户端id加载客户端
+     *
+     * @param clientId
+     * @return
+     * @throws InvalidClientException
+     */
     @Override
     public ClientDetails loadClientByClientId(String clientId) throws InvalidClientException {
         ClientDetails clientDetails = null;
         String value = (String) redisTemplate.boundHashOps(AuthConstant.CACHE_CLIENT_KEY).get(clientId);
-        if (CommonStringUtil.isBlank(value)) {
-
+        try {
+            if (CommonStringUtil.isBlank(value)) {
+                clientDetails = cacheAndGetClient(value);
+            } else {
+                clientDetails = JSONObject.parseObject(value, BaseClientDetails.class);
+            }
+        } catch (Exception e) {
+            log.error("clientId:{},{}", clientId, clientId);
+            throw new InvalidClientException("应用获取失败") {
+            };
         }
-        return super.loadClientByClientId(clientId);
+        return clientDetails;
     }
 
     /**
      * 缓存clientId 并返回
+     * 该方法会先从数据库获取客户端，如果存在则写入缓存
      */
     private ClientDetails cacheAndGetClient(String clientId) {
-        ClientDetails clientDetails = null;
+        ClientDetails clientDetails;
         try {
-            Object o = jdbcTemplate.queryForObject(SELECT_CLIENT_DETAILS_SQL, new ClientDetailsRowMapper(), clientId);
-        } catch (Exception e ) {
-            System.out.println(e);
+            clientDetails = jdbcTemplate.queryForObject(SELECT_CLIENT_DETAILS_SQL, new ClientDetailsRowMapper(), clientId);
+            if (clientDetails != null) {
+                // 写入Redis缓存
+                redisTemplate.boundHashOps(AuthConstant.CACHE_CLIENT_KEY).put(clientId, JSONObject.toJSONString(clientDetails));
+                log.info("缓存clientId:{},{}", clientId, clientDetails);
+            }
+        } catch (EmptyResultDataAccessException | NoSuchClientException e) {
+            log.error("clientId:{},{}", clientId, clientId);
+            throw new AuthenticationException("应用不存在") {
+            };
+        } catch (InvalidClientException e) {
+            throw new AuthenticationException("应用状态不合法") {
+            };
         }
         return clientDetails;
     }
