@@ -4,7 +4,7 @@ package vanliuzhi.org.auth.service.json;
  * @author lys3415
  */
 public class Jackson2Mapper implements JsonMapper {
-    private com.fasterxml.jackson.databind.ObjectMapper mapper = new com.fasterxml.jackson.databind.ObjectMapper();
+    private final com.fasterxml.jackson.databind.ObjectMapper mapper = new com.fasterxml.jackson.databind.ObjectMapper();
 
     @Override
     public String write(Object input) throws Exception {
