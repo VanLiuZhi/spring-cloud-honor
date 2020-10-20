@@ -66,6 +66,7 @@ public class PasswordEnhanceTokenGranter extends AbstractTokenGranter {
         }
 
         // Protect from downstream leaks of password
+        // 移除账号，密码，验证码数据，防止数据泄露到下游
         parameters.remove("password");
         parameters.remove("deviceId");
         parameters.remove("validCode");
